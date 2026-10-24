@@ -77,7 +77,7 @@ function normalizeStringList(value, fallback = []) {
 export function loadConfig(overrides = {}) {
   const defaults = {
     port: parseNumber(process.env.PORT, 10000),
-    host: process.env.HOST ?? "127.0.0.1",
+    host: process.env.HOST ?? "0.0.0.0",
     allowedOrigins: normalizeAllowedOrigins(process.env.AI_SHIELD_ALLOWED_ORIGINS),
     masterKey: process.env.AI_SHIELD_MASTER_KEY ?? "",
     adminUsername: normalizeString(process.env.AI_SHIELD_ADMIN_USERNAME, "admin"),
