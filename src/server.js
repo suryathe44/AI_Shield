@@ -7,9 +7,8 @@ loadLocalEnvFile();
 const { server, config, logger, feedbackStore } = createAiShieldApp();
 
 await logger.ensureReady();
-
-const PORT = config.port;
-const HOST = config.host;
+const PORT = Number(process.env.PORT) || config.port || 10000;
+const HOST = process.env.HOST || config.host || "0.0.0.0";
 
 server.listen(PORT, HOST, () => {
   console.log(`AI Shield listening on http://${HOST}:${PORT}`);
