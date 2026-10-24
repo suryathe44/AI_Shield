@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Shield</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow-left"></div>
+    <div class="page-glow page-glow-right"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- 1. AI Shield Custom Language Selector Dock -->
+    <div class="language-changer-dock">
+      <div class="lang-pill">
+        <span class="lang-globe">🌐</span>
+        <select id="customLanguageSelect" class="custom-lang-select" aria-label="Select Interface Language">
+          <option value="en">English (US)</option>
+          <option value="hi">हिंदी (Hindi)</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="mr">मराठी (Marathi)</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="gu">ગુજરાતી (Gujarati)</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+          <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Hidden Native Google Translate Element -->
+    <div id="google_translate_element"></div>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero_eyebrow">AI Shield</p>
+        <h1 data-i18n="hero_title"><span>Detect scams</span> before they cost you.</h1>
+        <p class="lede" data-i18n="hero_lede">
+          AI Shield analyzes suspicious messages and visible screen text using local machine
+          learning, behavioral signals, and security rules—while keeping sensitive content
+          under your control.
+        </p>
+        <div class="hero-pills">
+          <span data-i18n="pill_local">Local-first analysis</span>
+          <span data-i18n="pill_consent">Consent-based processing</span>
+          <span data-i18n="pill_scoring">Explainable risk scoring</span>
+          <span data-i18n="pill_logging">Optional encrypted logging</span>
+        </div>
+        <figure class="hero-visual">
+          <img
+            src="./assets/ai-shield-hero.webp"
+            alt="A smartphone protected by a digital shield while suspicious payment messages are checked"
+            width="1199"
+            height="750"
+            fetchpriority="high"
+          />
+          <figcaption data-i18n="hero_caption">Built for Indian payment scams. Analysis stays on your device.</figcaption>
+        </figure>
+      </div>
+      <aside class="hero-metric">
+        <p class="metric-label" data-i18n="engine_title">3-Layer Detection Engine</p>
+        <ol class="engine-list" id="heroRing">
+          <li>
+            <span class="engine-number">01</span>
+            <span class="engine-icon engine-icon-ml" aria-hidden="true"></span>
+            <span class="engine-copy">
+              <strong data-i18n="engine_ml_title">Local ML classification</strong>
+              <small data-i18n="engine_ml_desc">Scores language patterns in your browser.</small>
+            </span>
+          </li>
+          <li>
+            <span class="engine-number">02</span>
+            <span class="engine-icon engine-icon-rules" aria-hidden="true"></span>
+            <span class="engine-copy">
+              <strong data-i18n="engine_rules_title">Rule-based threat detection</strong>
+              <small data-i18n="engine_rules_desc">Checks known scam and phishing indicators.</small>
+            </span>
+          </li>
+          <li>
+            <span class="engine-number">03</span>
+            <span class="engine-icon engine-icon-behavior" aria-hidden="true"></span>
+            <span class="engine-copy">
+              <strong data-i18n="engine_behavior_title">Behavioral risk analysis</strong>
+              <small data-i18n="engine_behavior_desc">Finds urgency, coercion, and impersonation.</small>
+            </span>
+          </li>
+        </ol>
+        <p class="metric-caption" data-i18n="engine_caption">Three independent signal layers contribute to an explainable 0–100 risk score.</p>
+      </aside>
+    </header>
+
+    <main class="dashboard">
+      <section class="panel panel-form panel-message">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker" data-i18n="msg_kicker">Message Protection</p>
+            <h2 data-i18n="msg_title">Inspect a message before you trust it</h2>
+          </div>
+          <p class="panel-note" data-i18n="msg_note">
+            Paste suspicious content for a local verdict, then choose whether to verify it
+            with the AI Shield API.
+          </p>
+        </div>
+
+        <ol class="workflow-strip" aria-label="Message protection workflow">
+          <li>
+            <strong data-i18n="step_input">Input</strong>
+            <span data-i18n="step_input_desc">Paste an email, SMS, or chat message.</span>
+          </li>
+          <li>
+            <strong data-i18n="step_local">Local check</strong>
+            <span data-i18n="step_local_desc">Analysis runs in this browser after you opt in.</span>
+          </li>
+          <li>
+            <strong data-i18n="step_api">API choice</strong>
+            <span data-i18n="step_api_desc">Content is sent only when you select verification.</span>
+          </li>
+          <li>
+            <strong data-i18n="step_verdict">Verdict</strong>
+            <span data-i18n="step_verdict_desc">Review the score, detected reasons, and next steps.</span>
+          </li>
+        </ol>
+
+        <article class="demo-message-card" aria-labelledby="demoMessageTitle">
+          <img
+            src="./assets/demo-upi-scam.webp"
+            alt="Example UPI refund scam message asking for a UPI PIN and collect-request approval"
+            width="1000"
+            height="750"
+            loading="lazy"
+          />
+          <div class="demo-message-copy">
+            <p class="panel-kicker" data-i18n="demo_kicker">Demo scam message</p>
+            <h3 id="demoMessageTitle" data-i18n="demo_title">See how AI Shield catches a UPI collect scam</h3>
+            <p data-i18n="demo_desc">Loads a fictional example into the analyzer. It contains no real account or personal data.</p>
+            <button id="demoMessageButton" class="button-primary" type="button" data-i18n="demo_btn">Try this demo message</button>
+          </div>
+        </article>
+
+        <label class="field">
+          <span data-i18n="label_msg">Message or content</span>
+          <textarea
+            id="messageInput"
+            rows="9"
+            data-i18n-placeholder="placeholder_msg"
+            placeholder="Paste an email, SMS, chat message, or suspicious prompt here."
+          ></textarea>
+        </label>
+
+        <!-- Voice Reader Controls for Message -->
+        <div class="message-toolbar">
+          <button type="button" id="readAloudButton" class="button-voice" title="Read message aloud using text-to-speech" data-i18n="btn_listen">
+            🔊 Listen to Message
+          </button>
+          <button type="button" id="stopVoiceButton" class="button-voice voice-stop" title="Stop speech synthesis" data-i18n="btn_stop_audio">
+            ⏹ Stop Audio
+          </button>
+        </div>
+
+        <div class="inline-grid">
+          <label class="field">
+            <span data-i18n="label_source">Source</span>
+            <select id="sourceSelect">
+              <option value="message">Message</option>
+              <option value="email">Email</option>
+              <option value="chat">Chat</option>
+              <option value="sms">SMS</option>
+            </select>
+          </label>
+
+          <div class="consent-box">
+            <p class="consent-title" data-i18n="consent_title">Analysis &amp; storage choices</p>
+            <label class="checkbox">
+              <input id="processConsent" type="checkbox" />
+              <span data-i18n="consent_process">Allow local message analysis.</span>
+            </label>
+            <label class="checkbox">
+              <input id="storeLogConsent" type="checkbox" />
+              <span data-i18n="consent_store">Store encrypted audit metadata after API verification.</span>
+            </label>
+            <label class="checkbox">
+              <input id="snippetConsent" type="checkbox" disabled />
+              <span data-i18n="consent_preview">Also store a short encrypted content preview.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button id="serverAnalyzeButton" class="button-secondary" type="button" data-i18n="btn_verify_msg">
+            Verify Message with API
+          </button>
+          <p id="messageStatus" class="status-text" aria-live="polite">
+            Allow analysis, then paste a message for a local check.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel panel-results panel-results-message" aria-label="Message analysis results">
+        <div class="result-grid">
+          <article class="result-card" id="messageLocalCard">
+            <div class="result-head">
+              <p class="result-label">Local Message Verdict</p>
+              <div class="score-wheel" id="messageLocalDial">
+                <span id="messageLocalScore">0</span>
+              </div>
+            </div>
+            <p class="result-badge" id="messageLocalClassification">Ready when you are</p>
+            <p class="result-summary" id="messageLocalSummary">
+              Allow analysis and paste a message to see a local risk assessment.
+            </p>
+            <p class="result-meta" id="messageLocalMeta">Runs in this browser</p>
+            <h3 class="insight-title">Detected reasons</h3>
+            <ul class="signal-list" id="messageLocalReasons"></ul>
+            <h3 class="insight-title">Suspicious patterns</h3>
+            <ul class="chip-list" id="messageLocalHighlights"></ul>
+            <h3 class="insight-title">Recommended actions</h3>
+            <ul class="signal-list signal-list-tight" id="messageLocalRecommendations"></ul>
+          </article>
+
+          <article class="result-card result-card-accent" id="messageServerCard">
+            <div class="result-head">
+              <p class="result-label">Optional API Verification</p>
+              <div class="score-wheel" id="messageServerDial">
+                <span id="messageServerScore">0</span>
+              </div>
+            </div>
+            <p class="result-badge" id="messageServerClassification">Not Verified</p>
+            <p class="result-summary" id="messageServerSummary">
+              Use API verification when you want a server-confirmed result.
+            </p>
+            <p class="result-meta" id="messageServerMeta">Starts only from the verification button</p>
+            <h3 class="insight-title">Detected reasons</h3>
+            <ul class="signal-list" id="messageServerReasons"></ul>
+            <h3 class="insight-title">Suspicious patterns</h3>
+            <ul class="chip-list" id="messageServerHighlights"></ul>
+            <h3 class="insight-title">Recommended actions</h3>
+            <ul class="signal-list signal-list-tight" id="messageServerRecommendations"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel panel-form panel-screen">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker" data-i18n="screen_kicker">Screen Analysis</p>
+            <h2 data-i18n="screen_title">Check suspicious text on your screen</h2>
+          </div>
+          <p class="panel-note" data-i18n="screen_note">
+            Paste visible text for a browser-local verdict, or capture a screen for OCR by
+            the locally hosted AI Shield service.
+          </p>
+        </div>
+
+        <ol class="workflow-strip" aria-label="Screen analysis workflow">
+          <li>
+            <strong data-i18n="step_input">Input</strong>
+            <span data-i18n="step_input_desc">Paste text or choose a screen to capture.</span>
+          </li>
+          <li>
+            <strong data-i18n="step_local">Local check</strong>
+            <span data-i18n="step_local_desc">Pasted text is analyzed in this browser.</span>
+          </li>
+          <li>
+            <strong data-i18n="step_api">API choice</strong>
+            <span data-i18n="step_api_desc">Verification sends the visible text to the API.</span>
+          </li>
+          <li>
+            <strong data-i18n="step_verdict">Verdict</strong>
+            <span data-i18n="step_verdict_desc">See the score, suspicious patterns, and guidance.</span>
+          </li>
+        </ol>
+
+        <div class="consent-box consent-box-wide">
+          <label class="checkbox">
+            <input id="screenConsent" type="checkbox" />
+            <span data-i18n="screen_consent">Allow screen-text analysis and capture.</span>
+          </label>
+        </div>
+
+        <label class="field">
+          <span data-i18n="screen_label">Visible screen text</span>
+          <textarea
+            id="screenInput"
+            rows="7"
+            data-i18n-placeholder="screen_placeholder"
+            placeholder="Paste visible text from a suspicious screen, or choose Capture Screen for OCR."
+          ></textarea>
+        </label>
+
+        <div class="action-row action-row-wrap">
+          <button id="captureScreenButton" class="button-primary" type="button" data-i18n="btn_screen_capture">
+            Capture Screen for OCR
+          </button>
+          <button id="screenServerAnalyzeButton" class="button-secondary" type="button" data-i18n="btn_screen_api">
+            Verify Screen Text with API
+          </button>
+          <p id="screenStatus" class="status-text" aria-live="polite">
+            Allow screen analysis, then paste text or choose a screen to capture.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel panel-results panel-results-screen" aria-label="Screen analysis results">
+        <div class="result-grid">
+          <article class="result-card" id="screenLocalCard">
+            <div class="result-head">
+              <p class="result-label">Local Screen Verdict</p>
+              <div class="score-wheel" id="screenLocalDial">
+                <span id="screenLocalScore">0</span>
+              </div>
+            </div>
+            <p class="result-badge" id="screenLocalClassification">Ready when you are</p>
+            <p class="result-summary" id="screenLocalSummary">
+              Allow analysis and add visible text to see a browser-local verdict.
+            </p>
+            <p class="result-meta" id="screenLocalMeta">Pasted text runs in this browser</p>
+            <h3 class="insight-title">Detected reasons</h3>
+            <ul class="signal-list" id="screenLocalReasons"></ul>
+            <h3 class="insight-title">Suspicious patterns</h3>
+            <ul class="chip-list" id="screenLocalHighlights"></ul>
+            <h3 class="insight-title">Recommended actions</h3>
+            <ul class="signal-list signal-list-tight" id="screenLocalRecommendations"></ul>
+          </article>
+
+          <article class="result-card result-card-accent" id="screenServerCard">
+            <div class="result-head">
+              <p class="result-label">Optional API Verification</p>
+              <div class="score-wheel" id="screenServerDial">
+                <span id="screenServerScore">0</span>
+              </div>
+            </div>
+            <p class="result-badge" id="screenServerClassification">Not Verified</p>
+            <p class="result-summary" id="screenServerSummary">
+              Send the extracted or pasted text when you want an API-confirmed result.
+            </p>
+            <p class="result-meta" id="screenServerMeta">Starts only from the verification button</p>
+            <h3 class="insight-title">Detected reasons</h3>
+            <ul class="signal-list" id="screenServerReasons"></ul>
+            <h3 class="insight-title">Suspicious patterns</h3>
+            <ul class="chip-list" id="screenServerHighlights"></ul>
+            <h3 class="insight-title">Recommended actions</h3>
+            <ul class="signal-list signal-list-tight" id="screenServerRecommendations"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel panel-form panel-video" id="videoPanel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker" data-i18n="video_kicker">AI Deepfake &amp; Synthetic Media</p>
+            <h2 data-i18n="video_title">Detect if a video is Real or AI-Generated</h2>
+          </div>
+          <p class="panel-note" data-i18n="video_note">
+            Upload any video or test sample presets to detect Face-Swaps, AI generation (Sora, Runway, Pika),
+            and synthetic audio. Video processing runs safely inside your browser.
+          </p>
+        </div>
+
+        <ol class="workflow-strip" aria-label="Video analysis workflow">
+          <li>
+            <strong>1. Input Video</strong>
+            <span>Upload .mp4 / .webm or pick an instant demo preset.</span>
+          </li>
+          <li>
+            <strong>2. Frame Extraction</strong>
+            <span>Extracts keyframe micro-textures and facial contours.</span>
+          </li>
+          <li>
+            <strong>3. Generative Forensic</strong>
+            <span>Checks temporal flicker, blur boundaries, and AI tags.</span>
+          </li>
+          <li>
+            <strong>4. Verdict</strong>
+            <span>See if video is Authentic, Suspicious, or AI Deepfake.</span>
+          </li>
+        </ol>
+
+        <div class="demo-message-card demo-video-card">
+          <div class="video-preview-wrapper" id="videoPreviewWrapper">
+            <video id="videoPreview" controls playsinline muted></video>
+            <canvas id="videoCanvas" style="display:none;"></canvas>
+            <div class="video-scanner-beam" id="videoScannerBeam"></div>
+            <div class="video-placeholder" id="videoPlaceholder">
+              <span class="video-placeholder-icon">🎬</span>
+              <p><strong>Click here to select a video</strong> or drag &amp; drop file</p>
+              <span class="button-secondary video-browse-badge">Browse Video File</span>
+            </div>
+          </div>
+          <div class="demo-message-copy">
+            <p class="panel-kicker" data-i18n="video_preset_title">Instant Forensic Presets</p>
+            <h3>Test with Pre-loaded Real &amp; Deepfake Videos</h3>
+            <p>
+              Compare real optical camera recordings against advanced AI deepfakes and diffusion-generated clips:
+            </p>
+            <div class="video-preset-buttons">
+              <button id="presetDeepfakeButton" class="button-preset preset-scam" type="button" data-i18n="video_p1">
+                🎭 AI Deepfake (FaceSwap / LipSync)
+              </button>
+              <button id="presetDiffusionButton" class="button-preset preset-suspicious" type="button" data-i18n="video_p2">
+                ⚡ AI Diffusion (Sora / Runway Gen)
+              </button>
+              <button id="presetRealButton" class="button-preset preset-safe" type="button" data-i18n="video_p3">
+                🛡️ Authentic Mobile Camera Recording
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="consent-box consent-box-wide">
+          <label class="checkbox">
+            <input id="videoConsent" type="checkbox" checked />
+            <span data-i18n="video_consent">Allow video frame extraction and deepfake forensic inspection.</span>
+          </label>
+        </div>
+
+        <div class="field">
+          <span data-i18n="video_upload_label">Upload custom video (.mp4, .webm, .mov)</span>
+          <input
+            type="file"
+            id="videoFileInput"
+            accept="video/mp4,video/webm,video/quicktime,video/x-msvideo"
+            class="text-input video-file-input"
+          />
+        </div>
+
+        <div class="action-row action-row-wrap">
+          <button id="videoLocalAnalyzeButton" class="button-primary" type="button" data-i18n="btn_video_local">
+            Analyze Video Locally
+          </button>
+          <button id="videoServerAnalyzeButton" class="button-secondary" type="button" data-i18n="btn_video_api">
+            Verify Deepfake with API
+          </button>
+          <p id="videoStatus" class="status-text" aria-live="polite">
+            Ready to analyze video for AI deepfakes and synthetic generation.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel panel-results panel-results-video" aria-label="Video analysis results">
+        <div class="result-grid">
+          <article class="result-card" id="videoLocalCard">
+            <div class="result-head">
+              <p class="result-label">Local Video Authenticity Verdict</p>
+              <div class="score-wheel" id="videoLocalDial">
+                <span id="videoLocalScore">0</span>
+              </div>
+            </div>
+            <p class="result-badge" id="videoLocalClassification">Ready when you are</p>
+            <p class="result-summary" id="videoLocalSummary">
+              Choose a video or preset above to run local deepfake detection.
+            </p>
+            <p class="result-meta" id="videoLocalMeta">Runs entirely in this browser</p>
+            <h3 class="insight-title">Forensic reasons</h3>
+            <ul class="signal-list" id="videoLocalReasons"></ul>
+            <h3 class="insight-title">Synthetic indicators</h3>
+            <ul class="chip-list" id="videoLocalHighlights"></ul>
+            <h3 class="insight-title">Protection advice</h3>
+            <ul class="signal-list signal-list-tight" id="videoLocalRecommendations"></ul>
+          </article>
+
+          <article class="result-card result-card-accent" id="videoServerCard">
+            <div class="result-head">
+              <p class="result-label">Optional API Verification</p>
+              <div class="score-wheel" id="videoServerDial">
+                <span id="videoServerScore">0</span>
+              </div>
+            </div>
+            <p class="result-badge" id="videoServerClassification">Not Verified</p>
+            <p class="result-summary" id="videoServerSummary">
+              Verify video characteristics against the AI Shield server engine.
+            </p>
+            <p class="result-meta" id="videoServerMeta">Starts only from the verification button</p>
+            <h3 class="insight-title">Forensic reasons</h3>
+            <ul class="signal-list" id="videoServerReasons"></ul>
+            <h3 class="insight-title">Synthetic indicators</h3>
+            <ul class="chip-list" id="videoServerHighlights"></ul>
+            <h3 class="insight-title">Protection advice</h3>
+            <ul class="signal-list signal-list-tight" id="videoServerRecommendations"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel panel-architecture">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Architecture</p>
+            <h2>How AI Shield makes its decisions</h2>
+          </div>
+        </div>
+
+        <div class="architecture-grid">
+          <article data-icon="layers">
+            <h3>1. Multi-layer detection</h3>
+            <p>
+              AI Shield combines local machine-learning classification using Naive Bayes,
+              rule-based indicators, and behavioral analysis to identify phishing,
+              impersonation, coercion, and scam patterns.
+            </p>
+          </article>
+          <article data-icon="lock">
+            <h3>2. Minimal encrypted logging</h3>
+            <p>
+              Logging is optional. When enabled for an API request, AI Shield stores encrypted
+              audit metadata, hashed identifiers, and a content preview only if separately selected.
+            </p>
+          </article>
+          <article data-icon="explain">
+            <h3>3. Explainable decisions</h3>
+            <p>
+              Each completed verdict shows detected signals, suspicious patterns, and
+              recommended actions so users can understand the score.
+            </p>
+          </article>
+          <article data-icon="extend">
+            <h3>4. Ready for extension</h3>
+            <p>
+              The modular detection and API layers can support future browser extensions,
+              OCR improvements, voice-scam detection, and mobile workflows.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel panel-feedback" aria-labelledby="feedbackTitle">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker" data-i18n="feedback_kicker">Product Feedback</p>
+            <h2 id="feedbackTitle" data-i18n="feedback_title">Help improve AI Shield</h2>
+          </div>
+          <p class="panel-note" data-i18n="feedback_note">
+            Share a rating and optional product comment. Feedback is separate from message
+            analysis and screen verification.
+          </p>
+        </div>
+
+        <form id="feedbackForm" class="feedback-form">
+          <fieldset class="feedback-rating">
+            <legend>Rating <span aria-hidden="true">*</span></legend>
+            <div class="rating-options">
+              <label><input type="radio" name="feedbackRating" value="1" required /><span>1</span></label>
+              <label><input type="radio" name="feedbackRating" value="2" /><span>2</span></label>
+              <label><input type="radio" name="feedbackRating" value="3" /><span>3</span></label>
+              <label><input type="radio" name="feedbackRating" value="4" /><span>4</span></label>
+              <label><input type="radio" name="feedbackRating" value="5" /><span>5</span></label>
+            </div>
+            <p class="feedback-scale"><span>Not useful</span><span>Very useful</span></p>
+          </fieldset>
+
+          <label class="field">
+            <span>Category</span>
+            <select id="feedbackCategory" required>
+              <option value="Useful">Useful</option>
+              <option value="Confusing">Confusing</option>
+              <option value="False Positive">False Positive</option>
+              <option value="False Negative">False Negative</option>
+              <option value="Feature Request">Feature Request</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label class="field feedback-comment">
+            <span>Optional comment</span>
+            <textarea id="feedbackComment" maxlength="500" rows="5" placeholder="What worked well, felt confusing, or should improve?"></textarea>
+            <small id="feedbackCharacterCount">0 / 500</small>
+          </label>
+
+          <div class="feedback-privacy">
+            <p>No personal details are requested or included in the feedback record.</p>
+          </div>
+
+          <div class="action-row action-row-wrap">
+            <button id="feedbackSubmitButton" class="button-primary" type="submit" data-i18n="btn_feedback_submit">Submit Feedback</button>
+            <p id="feedbackStatus" class="status-text" aria-live="polite">Ready for your feedback.</p>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script type="module" src="./i18n.js"></script>
+    <script type="module" src="./app.js"></script>
+
+    <!-- Google Translate Script & Custom Language Hook -->
+    <script type="module">
+      import { applyLanguage, DEMO_SCAM_MESSAGES } from "./i18n.js";
+      window.scamMessagesByLanguage = DEMO_SCAM_MESSAGES;
+      window.applyLanguage = applyLanguage;
+
+      window.googleTranslateElementInit = function() {
+        if (window.google && window.google.translate) {
+          try {
+            new window.google.translate.TranslateElement({
+              pageLanguage: 'en',
+              autoDisplay: false
+            }, 'google_translate_element');
+          } catch (e) {
+            console.debug("Google Translate init fallback:", e);
+          }
+        }
+      };
+
+      window.changeLanguage = function(langCode) {
+        // 1. Instant on-device UI Translation for headings, buttons, and text
+        try {
+          applyLanguage(langCode);
+        } catch (err) {
+          console.error("Local i18n error:", err);
+        }
+
+        // 2. Also automatically swap the demo scam message to that language
+        const consent = document.getElementById('processConsent');
+        if (consent) {
+          consent.checked = true;
+        }
+        const msgInput = document.getElementById('messageInput');
+        if (msgInput && DEMO_SCAM_MESSAGES[langCode]) {
+          msgInput.value = DEMO_SCAM_MESSAGES[langCode];
+          msgInput.dispatchEvent(new Event('input'));
+        }
+
+        // 3. Update Google Translate frame selector if available
+        try {
+          const select = document.querySelector('.goog-te-combo');
+          if (select) {
+            select.value = langCode;
+            select.dispatchEvent(new Event('change'));
+          }
+        } catch (e) {
+          console.debug("Google translate combo error:", e);
+        }
+      };
+
+      // Ensure select event listener is bound
+      const langSelect = document.getElementById('customLanguageSelect');
+      if (langSelect) {
+        langSelect.addEventListener('change', (e) => {
+          window.changeLanguage(e.target.value);
+        });
+      }
+
+      // Voice Reader (Text to Speech) functionality
+      const readBtn = document.getElementById('readAloudButton');
+      const stopBtn = document.getElementById('stopVoiceButton');
+
+      if (readBtn && 'speechSynthesis' in window) {
+        readBtn.addEventListener('click', () => {
+          const text = document.getElementById('messageInput').value.trim();
+          if (!text) {
+            alert('Please paste or select a message first to read aloud.');
+            return;
+          }
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          const ls = document.getElementById('customLanguageSelect');
+          if (ls && ls.value) {
+            utterance.lang = ls.value;
+          }
+          window.speechSynthesis.speak(utterance);
+        });
+
+        if (stopBtn) {
+          stopBtn.addEventListener('click', () => {
+            window.speechSynthesis.cancel();
+          });
+        }
+      }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>

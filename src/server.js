@@ -1,0 +1,44 @@
+import { loadLocalEnvFile } from "./utils/loadEnv.js";
+import { createAiShieldApp } from "./app.js";
+import { getSecurityConfigWarnings } from "./utils/securityConfig.js";
+
+loadLocalEnvFile();
+
+const { server, config, logger, feedbackStore } = createAiShieldApp();
+
+await logger.ensureReady();
+
+const PORT = config.port;
+const HOST = config.host;
+
+server.listen(PORT, HOST, () => {
+  console.log(`AI Shield listening on http://${HOST}:${PORT}`);
+
+  if (config.authDebug) {
+    console.log(
+      `AI Shield admin auth loaded for username "${config.adminUsername}" with whitelist: ${
+        config.adminIpWhitelist.length ? config.adminIpWhitelist.join(", ") : "*"
+      }`
+    );
+  }
+
+  if (logger.getStorageMetadata().usesEphemeralKey) {
+    console.log(
+      "AI Shield is using an ephemeral encryption key. Set AI_SHIELD_MASTER_KEY for production persistence."
+    );
+  }
+
+  for (const warning of getSecurityConfigWarnings(config)) {
+    console.warn(`[AI Shield][security] ${warning}`);
+  }
+});
+
+// graceful shutdown
+for (const signal of ["SIGINT", "SIGTERM"]) {
+  process.on(signal, () => {
+    server.close(async () => {
+      await feedbackStore.close?.();
+      process.exit(0);
+    });
+  });
+}

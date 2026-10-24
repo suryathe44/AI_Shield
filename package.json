@@ -1,0 +1,23 @@
+{
+  "name": "ai-shield",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Privacy-first AI-powered cybersecurity system for scam and phishing detection.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test",
+    "admin:hash": "node scripts/generate-admin-password-hash.js",
+    "admin:otp-secret": "node scripts/generate-admin-otp-secret.js",
+    "security:master-key": "node scripts/generate-master-key.js",
+    "build:extension": "node scripts/build-extension.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "pg": "^8.23.0"
+  }
+}
